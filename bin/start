@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+root = File.expand_path('../../', __FILE__)
+config_pt = File.expand_path('config.yaml', root)
+$LOAD_PATH << File.expand_path('lib/', root)
+
+require "tuhh/mensa"
+TUHH::Mensa::Bot::Interface.new(config_pt).run
+
