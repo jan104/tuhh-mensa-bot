@@ -1,0 +1,13 @@
+[Unit]
+Description=tuhh-mensa-bot
+After=network.target
+
+[Service]
+Type=simple
+User=tuhh-mensa-bot
+WorkingDirectory=/home/service/tuhh-mensa-bot/app
+ExecStart=/home/service/tuhh-mensa-bot/.rbenv/bin/rbenv exec bundle exec bin/start
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
