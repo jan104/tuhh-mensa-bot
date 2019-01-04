@@ -1,3 +1,4 @@
+# coding: utf-8
 require "http"
 require "nokogiri"
 
@@ -25,6 +26,17 @@ class TUHH::Mensa::Scraper
     [url, HTTP.get(url).to_s] # TODO: Error handling
   end
 
+  def map_icon(img)
+    case img.attr("alt")
+    when /climate plate/i; "🌲"
+    when /vegetarian/i;    "🥕"
+    when /vegan/i;         "Ⓥ"
+    when /lactose-free/i;  "w/o lactose" # better idea?
+    when /contains beef/i; "🐮"
+    else; "X"
+    end
+  end
+
   def scrape(spec)
     url, html = fetch(spec)
     dom = Nokogiri::HTML(html)
@@ -34,11 +46,16 @@ class TUHH::Mensa::Scraper
     resp << "\n\n"
 
     dom.css("div#plan tr.odd, div#plan tr.even").each { |dish|
-      resp << dish.css(".dish-description").first.text.strip
-          .gsub(/\s*\(.*?\)\s*/, "") # Remove annoying allergens
-      resp << ": "
+      description = dish.css(".dish-description").first
+      label = description.text.strip
+
+      # remove annoying allergens
+      resp << label.gsub(/\s*\(.*?\)\s*/, "")
+
+      icons = description.css("img").map { |img| map_icon(img) }
+      resp << "\n    "
       resp << dish.css(".price").first.text.strip
-      resp << "\n"
+      resp << " / #{icons.join(', ')}\n\n"
     }
     resp << "\n" << url
     resp
