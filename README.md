@@ -55,6 +55,7 @@ sudo systemctl enable tuhh-mensa-bot # Everything is fine!
 ## Todo
 
 - Implement caching
+- Implement multi-language support
 
 ## License
 
