@@ -29,15 +29,24 @@ class TUHH::Mensa::Scraper
 
   def map_icon(img)
     case img.attr("alt")
-    when /climate plate/i;    "🌲"
-    when /vegetarian/i;       "🥕"
-    when /vegan/i;            "Ⓥ"
-    when /lactose-free/i;     "w/o lactose" # better idea?
-    when /mensa vital/i;      "🏋️";
-    when /contains beef/i;    "🐮"
-    when /contains pork/i;    "🐷"
-    when /contains poultry/i; "🐔"
-    else; "X"
+    when /climate plate/i, /klima teller/i
+      "🌲"
+    when /vegetarian/i, /vegetarisch/i
+      "🥕"
+    when /vegan/i
+      "Ⓥ"
+    when /lactose-free/i, /laktosefrei/i
+      "w/o lactose" # better idea?
+    when /mensa vital/i
+      "🏋️"
+    when /contains beef/i, /mit rind/i
+      "🐮"
+    when /contains pork/i, /mit schwein/i
+      "🐷"
+    when /contains poultry/i, /mit geflügel/i
+      "🐔"
+    else
+      "X"
     end
   end
 
