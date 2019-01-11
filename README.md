@@ -55,9 +55,8 @@ sudo systemctl enable tuhh-mensa-bot # Everything is fine!
 ## Todo
 
 - Implement caching
-- Implement multi-language support
 
 ## License
 
-This software is Copyright (c) 2019 by Martin Borchert.  
+This software is Copyright (c) 2019 by Martin Borchert.
 This is free software, licensed under The MIT (X11) License.
