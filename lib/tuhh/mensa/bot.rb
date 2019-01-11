@@ -1,3 +1,4 @@
+require "pathname"
 require "psych"
 
 require "telegram_bot"
@@ -10,6 +11,7 @@ require "tuhh/mensa/bot/usermanager"
 class TUHH::Mensa::Bot::Interface
   def initialize(config_pt)
     @config = Psych.load(IO.read(config_pt), symbolize_names: 1)
+    @config = process_config(@config)
     @tg_bot = TelegramBot.new(token: @config.fetch(:token))
     @handler = TUHH::Mensa::Bot::Handlers::Default.new(@config)
     @users = TUHH::Mensa::Bot::UserManager.new(@config)
@@ -41,5 +43,12 @@ class TUHH::Mensa::Bot::Interface
       reply.text = response[user.lang]
       reply.send_with(@tg_bot)
     }
+  end
+
+  private
+  def process_config(config)
+    config[:cache] = Pathname.new(config[:cache])
+    config[:cache].mkpath
+    config
   end
 end

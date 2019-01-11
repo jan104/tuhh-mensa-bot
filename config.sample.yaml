@@ -1,6 +1,6 @@
 token: 'your-token-here'
 owner: '@your-username-here'
+cache: '.cache'
 urls:
   en: https://speiseplan.studierendenwerk-hamburg.de/en/570
   de: https://speiseplan.studierendenwerk-hamburg.de/de/570
-

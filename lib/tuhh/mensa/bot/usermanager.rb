@@ -8,7 +8,7 @@ class TUHH::Mensa::Bot::UserManager
 
   def get(tg_id)
     unless @users[tg_id]
-      @users[tg_id] = TUHH::Mensa::Bot::User.new(tg_id)
+      @users[tg_id] = TUHH::Mensa::Bot::User.new(tg_id, @config)
     end
 
     return @users[tg_id]
