@@ -57,17 +57,14 @@ class TUHH::Mensa::Bot::Handlers::Default
   end
 
   def on_now(user, message)
-    {
-      en: @scraper.show(:now),
-      de: @scraper.show(:now)
-    }
+    # Return the plan in user language only,
+    # for performance and bandwidth reasons
+    {user.lang => @scraper.show(:now, user.lang)}
   end
 
   def on_next(user, message)
-    {
-      en: @scraper.show(:now),
-      de: @scraper.show(:now)
-    }
+    # see on_now
+    {user.lang => @scraper.show(:next, user.lang)}
   end
 
   def default(user, message)

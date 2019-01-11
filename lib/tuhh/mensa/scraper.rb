@@ -9,8 +9,9 @@ class TUHH::Mensa::Scraper
     @config = config
   end
 
-  def make_url(spec)
-    url = @config.dig(:urls, :en) # TODO: Language selection
+  def make_url(spec, lang)
+    url = @config.dig(:urls, lang)
+    puts "Built url: #{url}"
     year = Time.now.year
 
     case spec
@@ -21,8 +22,8 @@ class TUHH::Mensa::Scraper
     end
   end
 
-  def fetch(spec)
-    url = make_url(spec)
+  def fetch(spec, lang)
+    url = make_url(spec, lang)
     [url, HTTP.get(url).to_s] # TODO: Error handling
   end
 
@@ -40,8 +41,8 @@ class TUHH::Mensa::Scraper
     end
   end
 
-  def scrape(spec)
-    url, html = fetch(spec)
+  def scrape(spec, lang)
+    url, html = fetch(spec, lang)
     dom = Nokogiri::HTML(html)
     resp = String.new
 
@@ -64,7 +65,7 @@ class TUHH::Mensa::Scraper
     resp
   end
 
-  def show(spec)
-    scrape(spec)
+  def show(spec, lang)
+    scrape(spec, lang)
   end
 end
