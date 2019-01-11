@@ -5,12 +5,14 @@ require "telegram_bot"
 module TUHH::Mensa::Bot; end
 
 require "tuhh/mensa/bot/handlers"
+require "tuhh/mensa/bot/usermanager"
 
 class TUHH::Mensa::Bot::Interface
   def initialize(config_pt)
     @config = Psych.load(IO.read(config_pt), symbolize_names: 1)
     @tg_bot = TelegramBot.new(token: @config.fetch(:token))
     @handler = TUHH::Mensa::Bot::Handlers::Default.new(@config)
+    @users = TUHH::Mensa::Bot::UserManager.new(@config)
   end
 
   def run
@@ -19,6 +21,7 @@ class TUHH::Mensa::Bot::Interface
 
   def on_message(message)
     puts "@#{message.from.username}: #{message.text}"
+    user = @users.get(message.from.id)
     command = message.get_command_for(@tg_bot)
 
     if command =~ %r@^/([\w_]+)@i
@@ -29,9 +32,9 @@ class TUHH::Mensa::Bot::Interface
     puts "desired_method -> `#{desired_method}`"
 
     if @handler.respond_to?(desired_method)
-      @handler.public_send(desired_method, @tg_bot, message)
+      @handler.public_send(desired_method, @tg_bot, user, message)
     else
-      @handler.public_send(:default, @tg_bot, message)
+      @handler.public_send(:default, @tg_bot, user, message)
     end
   end
 end
