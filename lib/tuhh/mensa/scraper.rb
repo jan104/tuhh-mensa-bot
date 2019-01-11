@@ -11,7 +11,6 @@ class TUHH::Mensa::Scraper
 
   def make_url(spec, lang)
     url = @config.dig(:urls, lang)
-    puts "Built url: #{url}"
     year = Time.now.year
 
     case spec
