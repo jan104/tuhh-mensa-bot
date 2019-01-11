@@ -32,6 +32,7 @@ class TUHH::Mensa::Scraper
     when /vegetarian/i;       "🥕"
     when /vegan/i;            "Ⓥ"
     when /lactose-free/i;     "w/o lactose" # better idea?
+    when /mensa vital/i;      "🏋️";
     when /contains beef/i;    "🐮"
     when /contains pork/i;    "🐷"
     when /contains poultry/i; "🐔"
