@@ -18,7 +18,6 @@ class TUHH::Mensa::Bot::User
 
   def lang
     @prefs[:lang]
-    self
   end
 
   def save!

@@ -32,9 +32,14 @@ class TUHH::Mensa::Bot::Interface
     puts "desired_method -> `#{desired_method}`"
 
     if @handler.respond_to?(desired_method)
-      @handler.public_send(desired_method, @tg_bot, user, message)
+      response = @handler.public_send(desired_method, user, message)
     else
-      @handler.public_send(:default, @tg_bot, user, message)
+      response = @handler.public_send(:default, user, message)
     end
+
+    message.reply { |reply|
+      reply.text = response[user.lang]
+      reply.send_with(@tg_bot)
+    }
   end
 end

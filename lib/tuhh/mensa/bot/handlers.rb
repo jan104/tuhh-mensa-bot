@@ -9,67 +9,71 @@ class TUHH::Mensa::Bot::Handlers::Default
     @scraper = TUHH::Mensa::Scraper.new(config)
   end
 
-  def on_start(tg, user, message)
-    message.reply { |reply|
-      reply.text = <<~"EOF"
-        Hello.
+  def on_start(user, message)
+    resp = Hash.new
+    resp[:en] = <<~"EOF"
+      Hello.
 
-        Type /now to display the current menu.
-        Type /next to display the upcoming menu.
+      Type /now to display the current menu.
+      Type /next to display the upcoming menu.
 
-        If shit hits the fan, please inform #{@config.fetch(:owner)}.
-        EOF
+      If shit hits the fan, please inform #{@config.fetch(:owner)}.
+      EOF
 
-      reply.send_with(tg)
-    }
+    resp[:de] = <<~"EOF"
+      Hallo.
+
+      Sende /now für das aktuelle Menü.
+      Sende /next für das nächste Menü.
+
+      Falls etwas nicht geht, ist #{@config.fetch(:owner)} schuld.
+      EOF
+
+    resp
   end
 
-  def on_de(tg, user, message)
+  def on_de(user, message)
     user.lang = :de
 
-    message.reply { |reply|
-      reply.text = <<~"EOF"
-        Sprache aktualisiert.
+    text = <<~"EOF"
+      Sprache aktualisiert.
 
-        Use /en to switch back to English.
-        EOF
+      Use /en to switch back to English.
+      EOF
 
-      reply.send_with(tg)
-    }
+    {en: text, de: text}
   end
 
-  def on_en(tg, user, message)
+  def on_en(user, message)
     user.lang = :en
 
-    message.reply { |reply|
-      reply.text = <<~"EOF"
-        Updated language preference.
+    text = <<~"EOF"
+      Updated language preference.
 
-        Für Deutsch bitte /de schicken.
-        EOF
+      Für Deutsch bitte /de schicken.
+      EOF
 
-      reply.send_with(tg)
+    {en: text, de: text}
+  end
+
+  def on_now(user, message)
+    {
+      en: @scraper.show(:now),
+      de: @scraper.show(:now)
     }
   end
 
-  def on_now(tg, user, message)
-    message.reply { |reply|
-      reply.text = @scraper.show(:now)
-      reply.send_with(tg)
+  def on_next(user, message)
+    {
+      en: @scraper.show(:now),
+      de: @scraper.show(:now)
     }
   end
 
-  def on_next(tg, user, message)
-    message.reply { |reply|
-      reply.text = @scraper.show(:next)
-      reply.send_with(tg)
-    }
-  end
-
-  def default(tg, user, message)
-    message.reply { |reply|
-      reply.text = "I am unable to understand you :/"
-      reply.send_with(tg)
+  def default(user, message)
+    {
+      en: "I was unable to understand you :/",
+      de: "Ich konnte dich leider nicht verstehen :/"
     }
   end
 end
