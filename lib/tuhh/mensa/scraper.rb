@@ -7,6 +7,28 @@ module TUHH::Mensa; end
 class TUHH::Mensa::Scraper
   def initialize(config)
     @config = config
+    @icons = {
+      en: {
+        "climate plate"    => "🌲",
+        "vegetarian"       => "🥕",
+        "vegan"            => "Ⓥ",
+        "lactose-free"     => "🚫🥛",
+        "mensa vital"      => "🏋️",
+        "contains beef"    => "🐮",
+        "contains pork"    => "🐷",
+        "contains poultry" => "🐔"
+      },
+      de: {
+        "klima teller"     => "🌲",
+        "vegetarisch"      => "🥕",
+        "vegan"            => "Ⓥ",
+        "laktosefrei"      => "🚫🥛",
+        "mensa vital"      => "🏋️",
+        "mit rind"         => "🐮",
+        "mit schwein"      => "🐷",
+        "mit geflügel"     => "🐔"
+      }
+    }
   end
 
   def make_url(spec, lang)
@@ -27,26 +49,17 @@ class TUHH::Mensa::Scraper
   end
 
   def map_icon(img)
-    case img.attr("alt")
-    when /climate plate/i, /klima teller/i
-      "🌲"
-    when /vegetarian/i, /vegetarisch/i
-      "🥕"
-    when /vegan/i
-      "Ⓥ"
-    when /lactose-free/i, /laktosefrei/i
-      "🚫🥛"
-    when /mensa vital/i
-      "🏋️"
-    when /contains beef/i, /mit rind/i
-      "🐮"
-    when /contains pork/i, /mit schwein/i
-      "🐷"
-    when /contains poultry/i, /mit geflügel/i
-      "🐔"
-    else
-      "X"
-    end
+    alt = img.attr("alt")
+    @icons.each { |lang, icons|
+      icons.each { |desc, emoji|
+        re = /#{Regexp.quote(desc)}/i
+        if alt =~ re
+          return emoji
+        end
+      }
+    }
+
+    "X"
   end
 
   def scrape(spec, lang)
