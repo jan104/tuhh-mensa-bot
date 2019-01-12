@@ -5,28 +5,30 @@ require "nokogiri"
 module TUHH::Mensa; end
 
 class TUHH::Mensa::Scraper
+  attr_reader :icons
+
   def initialize(config)
     @config = config
     @icons = {
       en: {
-        "climate plate"    => "🌲",
-        "vegetarian"       => "🥕",
-        "vegan"            => "Ⓥ",
-        "lactose-free"     => "🚫🥛",
-        "mensa vital"      => "🏋️",
-        "contains beef"    => "🐮",
-        "contains pork"    => "🐷",
-        "contains poultry" => "🐔"
+        "Climate plate"    => "🌲",
+        "Vegetarian"       => "🥕",
+        "Vegan"            => "Ⓥ",
+        "Lactose-free"     => "🚫🥛",
+        "Mensa vital"      => "🏋️",
+        "Contains beef"    => "🐮",
+        "Contains pork"    => "🐷",
+        "Contains poultry" => "🐔"
       },
       de: {
-        "klima teller"     => "🌲",
-        "vegetarisch"      => "🥕",
-        "vegan"            => "Ⓥ",
-        "laktosefrei"      => "🚫🥛",
-        "mensa vital"      => "🏋️",
-        "mit rind"         => "🐮",
-        "mit schwein"      => "🐷",
-        "mit geflügel"     => "🐔"
+        "Klimateller"     => "🌲",
+        "Vegetarisch"      => "🥕",
+        "Vegan"            => "Ⓥ",
+        "Laktosefrei"      => "🚫🥛",
+        "Mensa Vital"      => "🏋️",
+        "Mit Rind"         => "🐮",
+        "Mit Schwein"      => "🐷",
+        "Mit Geflügel"     => "🐔"
       }
     }
   end

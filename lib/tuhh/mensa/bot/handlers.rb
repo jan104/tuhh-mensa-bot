@@ -32,6 +32,21 @@ class TUHH::Mensa::Bot::Handlers::Default
     resp
   end
 
+  def on_about(user, message)
+    resp = Hash.new
+    resp[:en] = "Legend:\n"
+    @scraper.icons[:en].each { |desc, emoji|
+      resp[:en] << "#{desc}: #{emoji}\n"
+    }
+
+    resp[:de] = "Legende:\n"
+    @scraper.icons[:de].each { |desc, emoji|
+      resp[:de] << "#{desc}: #{emoji}\n"
+    }
+
+    resp
+  end
+
   def on_de(user, message)
     user.lang = :de
 
