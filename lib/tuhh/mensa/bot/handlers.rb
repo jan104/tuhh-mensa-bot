@@ -17,6 +17,9 @@ class TUHH::Mensa::Bot::Handlers::Default
       Type /now to display the current menu.
       Type /next to display the upcoming menu.
 
+      Type /about to view an icon legend.
+      Type /en or /de to switch the language.
+
       If shit hits the fan, please inform #{@config.fetch(:owner)}.
       EOF
 
@@ -25,6 +28,9 @@ class TUHH::Mensa::Bot::Handlers::Default
 
       Sende /now für das aktuelle Menü.
       Sende /next für das nächste Menü.
+
+      Sende /about für eine Symbol-Legende.
+      Sende /en oder /de, um die Sprache zu wechseln.
 
       Falls etwas nicht geht, ist #{@config.fetch(:owner)} schuld.
       EOF
