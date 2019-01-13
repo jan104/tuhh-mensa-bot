@@ -21,7 +21,7 @@ class TUHH::Mensa::Scraper
         "Contains poultry" => "🐔"
       },
       de: {
-        "Klimateller"     => "🌲",
+        "Klima Teller"     => "🌲",
         "Vegetarisch"      => "🥕",
         "Vegan"            => "Ⓥ",
         "Laktosefrei"      => "🚫🥛",
