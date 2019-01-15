@@ -18,7 +18,8 @@ class TUHH::Mensa::Scraper
         "Mensa vital"      => "🏋️",
         "Contains beef"    => "🐮",
         "Contains pork"    => "🐷",
-        "Contains poultry" => "🐔"
+        "Contains poultry" => "🐔",
+        "Contains fish"    => "🐟"
       },
       de: {
         "Klima Teller"     => "🌲",
@@ -28,7 +29,8 @@ class TUHH::Mensa::Scraper
         "Mensa Vital"      => "🏋️",
         "Mit Rind"         => "🐮",
         "Mit Schwein"      => "🐷",
-        "Mit Geflügel"     => "🐔"
+        "Mit Geflügel"     => "🐔",
+        "Mit Fisch"        => "🐟"
       }
     }
   end
