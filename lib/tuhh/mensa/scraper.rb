@@ -9,30 +9,7 @@ class TUHH::Mensa::Scraper
 
   def initialize(config)
     @config = config
-    @icons = {
-      en: {
-        "Climate plate"    => "🌲",
-        "Vegetarian"       => "🥕",
-        "Vegan"            => "Ⓥ",
-        "Lactose-free"     => "🚫🥛",
-        "Mensa vital"      => "🏋️",
-        "Contains beef"    => "🐮",
-        "Contains pork"    => "🐷",
-        "Contains poultry" => "🐔",
-        "Contains fish"    => "🐟"
-      },
-      de: {
-        "Klima Teller"     => "🌲",
-        "Vegetarisch"      => "🥕",
-        "Vegan"            => "Ⓥ",
-        "Laktosefrei"      => "🚫🥛",
-        "Mensa Vital"      => "🏋️",
-        "Mit Rind"         => "🐮",
-        "Mit Schwein"      => "🐷",
-        "Mit Geflügel"     => "🐔",
-        "Mit Fisch"        => "🐟"
-      }
-    }
+    @icons = load_icons
   end
 
   def make_url(spec, lang)
@@ -92,5 +69,10 @@ class TUHH::Mensa::Scraper
 
   def show(spec, lang)
     scrape(spec, lang)
+  end
+
+  private
+  def load_icons
+    Psych.load_file(File.expand_path("../scraper/icons.yaml", __FILE__))
   end
 end
