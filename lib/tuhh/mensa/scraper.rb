@@ -17,7 +17,8 @@ class TUHH::Mensa::Scraper
     dom = Nokogiri::HTML(html)
     resp = String.new
 
-    resp << "[#{dom.css("tr#headline th.category").first.text}](#{url})"
+    date = dom.css("tr#headline th.category").first.text.strip
+    resp << "[#{date}](#{url})"
     resp << "\n\n"
 
     dom.css("div#plan tr.odd, div#plan tr.even").each { |dish|
@@ -27,7 +28,7 @@ class TUHH::Mensa::Scraper
       icons = description.css("img").map { |img| map_icon(img) }
       resp << "\n    "
       resp << dish.css(".price").first.text.strip
-      resp << " / #{icons.join(', ')}\n\n"
+      resp << " · #{icons.join(', ')}\n\n"
     }
     resp
   end
