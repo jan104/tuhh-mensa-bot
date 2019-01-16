@@ -67,7 +67,9 @@ class TUHH::Mensa::Scraper
     # Replace n-whitespace with a single space
     res.gsub!(/\s+/, " ")
 
-    puts res
+    # Always start the label with an uppercase letter
+    res[0] = res[0].upcase
+
     res
   end
 
