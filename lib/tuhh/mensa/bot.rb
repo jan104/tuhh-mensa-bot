@@ -39,6 +39,7 @@ class TUHH::Mensa::Bot::Interface
     end
 
     message.reply { |reply|
+      reply.parse_mode = 'Markdown'
       reply.text = response[user.lang]
       reply.send_with(@tg_bot)
     }

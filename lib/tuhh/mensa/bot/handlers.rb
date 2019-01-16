@@ -12,7 +12,7 @@ class TUHH::Mensa::Bot::Handlers::Default
   def on_start(user, message)
     resp = Hash.new
     resp[:en] = <<~"EOF"
-      Hello.
+      *Hello.*
 
       Type /now to display the current menu.
       Type /next to display the upcoming menu.
@@ -24,7 +24,7 @@ class TUHH::Mensa::Bot::Handlers::Default
       EOF
 
     resp[:de] = <<~"EOF"
-      Hallo.
+      *Hallo.*
 
       Sende /now für das aktuelle Menü.
       Sende /next für das nächste Menü.
@@ -40,12 +40,12 @@ class TUHH::Mensa::Bot::Handlers::Default
 
   def on_about(user, message)
     resp = Hash.new
-    resp[:en] = "Legend:\n"
+    resp[:en] = "*Legend*\n\n"
     @scraper.icons[:en].each { |desc, emoji|
       resp[:en] << "#{desc}: #{emoji}\n"
     }
 
-    resp[:de] = "Legende:\n"
+    resp[:de] = "*Legende*\n\n"
     @scraper.icons[:de].each { |desc, emoji|
       resp[:de] << "#{desc}: #{emoji}\n"
     }
@@ -57,7 +57,7 @@ class TUHH::Mensa::Bot::Handlers::Default
     user.lang = :de
 
     text = <<~"EOF"
-      Sprache aktualisiert.
+      *Sprache aktualisiert.*
 
       Use /en to switch back to English.
       EOF
@@ -69,7 +69,7 @@ class TUHH::Mensa::Bot::Handlers::Default
     user.lang = :en
 
     text = <<~"EOF"
-      Updated language preference.
+      *Updated language preference.*
 
       Für Deutsch bitte /de schicken.
       EOF

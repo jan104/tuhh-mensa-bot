@@ -17,19 +17,18 @@ class TUHH::Mensa::Scraper
     dom = Nokogiri::HTML(html)
     resp = String.new
 
-    resp << dom.css("tr#headline th.category").first.text
+    resp << "[#{dom.css("tr#headline th.category").first.text}](#{url})"
     resp << "\n\n"
 
     dom.css("div#plan tr.odd, div#plan tr.even").each { |dish|
       description = dish.css(".dish-description").first
 
-      resp << process_label(description.text)
+      resp << "*#{process_label(description.text)}*"
       icons = description.css("img").map { |img| map_icon(img) }
       resp << "\n    "
       resp << dish.css(".price").first.text.strip
       resp << " / #{icons.join(', ')}\n\n"
     }
-    resp << "\n" << url
     resp
   end
 
