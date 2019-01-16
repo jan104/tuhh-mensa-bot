@@ -22,11 +22,8 @@ class TUHH::Mensa::Scraper
 
     dom.css("div#plan tr.odd, div#plan tr.even").each { |dish|
       description = dish.css(".dish-description").first
-      label = description.text.strip
 
-      # remove annoying allergens
-      resp << label.gsub(/\s*\(.*?\)\s*/, "")
-
+      resp << process_label(description.text)
       icons = description.css("img").map { |img| map_icon(img) }
       resp << "\n    "
       resp << dish.css(".price").first.text.strip
@@ -55,6 +52,23 @@ class TUHH::Mensa::Scraper
     when :next
       url + "/#{year}/99/"
     end
+  end
+
+  def process_label(text)
+    res = text
+    res.strip!
+
+    # Remove annoying allergens
+    res.gsub!(/\s*\(.*?\)\s*/, "")
+
+    # Fix wrong spacing around commas
+    res.gsub!(/\s*?,\s*/, ", ")
+
+    # Replace n-whitespace with a single space
+    res.gsub!(/\s+/, " ")
+
+    puts res
+    res
   end
 
   def fetch(spec, lang)
