@@ -31,7 +31,6 @@ class TUHH::Mensa::Bot::Interface
     else
       desired_method = ''.to_sym
     end
-    puts "desired_method -> `#{desired_method}`"
 
     if @handler.respond_to?(desired_method)
       response = @handler.public_send(desired_method, user, message)
