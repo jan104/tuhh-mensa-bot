@@ -52,6 +52,16 @@ sudo systemctl status tuhh-mensa-bot # Verify that everything is working ...
 sudo systemctl enable tuhh-mensa-bot # Everything is fine!
 ```
 
+Updating the bot is relatively straightforward:
+```
+sudo systemctl stop tuhh-mensa-bot
+sudo su -l tuhh-mensa-bot
+cd app
+git pull
+exit
+sudo systemctl start tuhh-mensa-bot
+```
+
 ## Todo
 
 - Implement caching
