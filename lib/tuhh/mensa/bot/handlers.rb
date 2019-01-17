@@ -77,6 +77,11 @@ class TUHH::Mensa::Bot::Handlers::Default
     {en: text, de: text}
   end
 
+  def on_nao(user, message)
+    # Something something easter egg
+    {user.lang => "https://junk.martin.to/nao.jpg"}
+  end
+
   def on_now(user, message)
     # Return the plan in user language only,
     # for performance and bandwidth reasons
