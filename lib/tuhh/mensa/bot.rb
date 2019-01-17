@@ -21,6 +21,21 @@ class TUHH::Mensa::Bot::Interface
     @tg_bot.get_updates(fail_silently: 1) { |m| on_message(m) }
   end
 
+  private
+  def get_user(tg_id)
+    unless @users[tg_id]
+      @users[tg_id] = TUHH::Mensa::Bot::User.new(tg_id, @config)
+    end
+
+    return @users[tg_id]
+  end
+
+  def process_config(config)
+    config[:cache] = Pathname.new(config[:cache])
+    config[:cache].mkpath
+    config
+  end
+
   def on_message(message)
     puts "@#{message.from.username}: #{message.text}"
     user = get_user(message.from.id)
@@ -43,20 +58,5 @@ class TUHH::Mensa::Bot::Interface
       reply.text = response[user.lang]
       reply.send_with(@tg_bot)
     }
-  end
-
-  private
-  def get_user(tg_id)
-    unless @users[tg_id]
-      @users[tg_id] = TUHH::Mensa::Bot::User.new(tg_id, @config)
-    end
-
-    return @users[tg_id]
-  end
-
-  def process_config(config)
-    config[:cache] = Pathname.new(config[:cache])
-    config[:cache].mkpath
-    config
   end
 end
