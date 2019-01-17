@@ -6,7 +6,7 @@ require "telegram_bot"
 module TUHH::Mensa::Bot; end
 
 require "tuhh/mensa/bot/handlers"
-require "tuhh/mensa/bot/usermanager"
+require "tuhh/mensa/bot/user"
 
 class TUHH::Mensa::Bot::Interface
   def initialize(config_pt)
@@ -14,7 +14,7 @@ class TUHH::Mensa::Bot::Interface
     @config = process_config(@config)
     @tg_bot = TelegramBot.new(token: @config.fetch(:token))
     @handler = TUHH::Mensa::Bot::Handlers::Default.new(@config)
-    @users = TUHH::Mensa::Bot::UserManager.new(@config)
+    @users = Hash.new
   end
 
   def run
@@ -23,7 +23,7 @@ class TUHH::Mensa::Bot::Interface
 
   def on_message(message)
     puts "@#{message.from.username}: #{message.text}"
-    user = @users.get(message.from.id)
+    user = get_user(message.from.id)
     command = message.get_command_for(@tg_bot)
 
     if command =~ %r@^/([\w_]+)@i
@@ -46,6 +46,14 @@ class TUHH::Mensa::Bot::Interface
   end
 
   private
+  def get_user(tg_id)
+    unless @users[tg_id]
+      @users[tg_id] = TUHH::Mensa::Bot::User.new(tg_id, @config)
+    end
+
+    return @users[tg_id]
+  end
+
   def process_config(config)
     config[:cache] = Pathname.new(config[:cache])
     config[:cache].mkpath
